@@ -4,7 +4,8 @@ const BadRequest = require('../errors/BadRequest');
 const Forbidden = require('../errors/Forbidden');
 
 function getMovies(req, res, next) {
-  return Movie.find({})
+  return Movie.find({ owner: req.user._id })
+    .populate('owner')
     .then((movies) => res.status(200)
       .send(movies))
     .catch(next);
@@ -48,7 +49,7 @@ function createMovies(req, res, next) {
 }
 
 function deleteMovies(req, res, next) {
-  return Movie.findById(req.params.movieId)
+  return Movie.findById(req.params._id)
     .orFail()
     .catch((err) => {
       if (err.name === 'CastError') {
@@ -57,10 +58,10 @@ function deleteMovies(req, res, next) {
       throw new NotFound('Нет карточки с таким id');
     })
     .then((movie) => {
-      if (movie.owner.toString() !== req.user.movieId) {
+      if (movie.owner.toString() !== req.user._id) {
         throw new Forbidden('Недостаточно прав для выполнения операции');
       }
-      Movie.findByIdAndDelete(req.params.movieId)
+      Movie.findByIdAndDelete(req.params._id)
         .populate(['owner', 'likes'])
         .then((movieData) => res.send(movieData))
         .catch(next);

@@ -24,13 +24,13 @@ function getCurrentUser(req, res, next) {
 function updateProfile(req, res, next) {
   const {
     name,
-    about,
+    email,
   } = req.body;
   return User.findByIdAndUpdate(
     req.user._id,
     {
       name,
-      about,
+      email,
     },
     {
       new: true,

@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
@@ -19,8 +20,7 @@ mongoose.connect(DB, {
   useCreateIndex: true,
   useFindAndModify: false,
   useUnifiedTopology: true,
-})
-  .then(() => console.log('Connected to DB'));
+});
 
 app.use(bodyParser.urlencoded({
   extended: false,
@@ -50,6 +50,4 @@ app.use((err, req, res, next) => {
   next();
 });
 
-app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}`);
-});
+app.listen(PORT);
