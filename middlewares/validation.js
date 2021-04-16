@@ -49,11 +49,8 @@ const validateMovie = celebrate({
       thumbnail: Joi.string()
         .required()
         .custom(urlValidation),
-      movieId: Joi.string()
-        .required()
-        .alphanum()
-        .length(24)
-        .hex(),
+      movieId: Joi.number()
+        .required(),
       nameRU: Joi.string()
         .required(),
       nameEN: Joi.string()
