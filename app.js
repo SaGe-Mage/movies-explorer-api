@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 const bodyParser = require('body-parser');
@@ -8,6 +9,14 @@ const usersRouter = require('./routes/users');
 const moviesRouter = require('./routes/movies');
 const auth = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+
+const corsOptions = {
+  origin: [
+    'http://localhost:3001',
+    'https://localhost:3001',
+  ],
+  credentials: true,
+};
 
 const app = express();
 
@@ -19,6 +28,8 @@ mongoose.connect(DB, {
   useFindAndModify: false,
   useUnifiedTopology: true,
 });
+
+app.use(cors(corsOptions));
 
 app.use(bodyParser.urlencoded({
   extended: false,

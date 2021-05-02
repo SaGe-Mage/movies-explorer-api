@@ -27,12 +27,10 @@ function updateProfile(req, res, next) {
     email,
   } = req.body;
   return User.findByIdAndUpdate(
-    req.user._id,
-    {
+    req.user._id, {
       name,
       email,
-    },
-    {
+    }, {
       new: true,
       runValidators: true,
     },
@@ -68,10 +66,22 @@ function createProfile(req, res, next) {
       }
     })
     .then((user) => {
-      res.status(201)
+      const token = jwt.sign(
+        { _id: user._id },
+        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+        { expiresIn: '7d' },
+      );
+      res
+        .cookie('jwt', token, {
+          maxAge: 3600000 * 24 * 7,
+          httpOnly: true,
+          sameSite: true,
+        })
+        .status(201)
         .send({
           name: user.name,
           email: user.email,
+          id: user._id,
         });
     })
     .catch(next);
