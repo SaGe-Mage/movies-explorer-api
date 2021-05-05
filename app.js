@@ -12,8 +12,8 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const corsOptions = {
   origin: [
-    'http://moskvitins.movies.nomoredomains.icu/',
-    'https://moskvitins.movies.nomoredomains.icu/',
+    'http://moskvitins.movies.nomoredomains.icu',
+    'https://moskvitins.movies.nomoredomains.icu',
   ],
   credentials: true,
 };
