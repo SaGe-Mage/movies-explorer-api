@@ -105,7 +105,11 @@ function login(req, res, next) {
           httpOnly: true,
           sameSite: false,
         })
-        .send({ message: 'Успешная авторизация' });
+        .send({
+          name: user.name,
+          email: user.email,
+          id: user._id,
+        });
     })
     .catch(next);
 }
