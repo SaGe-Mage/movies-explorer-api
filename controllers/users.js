@@ -75,7 +75,7 @@ function createProfile(req, res, next) {
         .cookie('jwt', token, {
           maxAge: 3600000 * 24 * 7,
           httpOnly: true,
-          sameSite: false,
+          sameSite: true,
         })
         .status(201)
         .send({
@@ -103,7 +103,7 @@ function login(req, res, next) {
         .cookie('jwt', token, {
           maxAge: 3600000 * 24 * 7,
           httpOnly: true,
-          sameSite: false,
+          sameSite: true,
         })
         .send({
           name: user.name,
