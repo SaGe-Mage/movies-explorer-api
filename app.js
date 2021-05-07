@@ -12,6 +12,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const corsOptions = {
   origin: [
+    'http://192.168.2.202:3001',
     'http://localhost:3001',
     'http://moskvitins.movies.nomoredomains.icu',
     'https://moskvitins.movies.nomoredomains.icu',
